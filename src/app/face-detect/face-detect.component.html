@@ -1,3 +1,11 @@
-<p>
-  face-detect works!
-</p>
+
+  <input type="text"  #imgUrl name="imgUrl"> <button (click)="SearchDataForImg(imgUrl.value)">Chercher</button><br/>
+  <webcam [height]="500" [width]="500" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam"
+  [videoOptions]="videoOptions"
+></webcam>     <br/>
+<button class="actionBtn" (click)="triggerSnapshot();">Take A Snapshot</button>
+
+<div class="snapshot" *ngIf="webcamImage">
+  <h2>Nice one!</h2>
+  <img [src]="webcamImage.imageAsDataUrl"/>
+</div>
