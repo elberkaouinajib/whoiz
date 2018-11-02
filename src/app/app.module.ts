@@ -3,10 +3,12 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { FaceDetectComponent } from './face-detect/face-detect.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    FaceDetectComponent
   ],
   imports: [
     BrowserModule,
