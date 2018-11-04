@@ -9,10 +9,10 @@ import {WebcamImage, WebcamInitError, WebcamUtil} from 'ngx-webcam';
 })
 export class FaceDetectComponent implements OnInit {
   found:boolean;
-  //imgurl:string="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Dts_news_bill_gates_wikipedia.JPG/260px-Dts_news_bill_gates_wikipedia.JPG";
   textData:string="";
+  public imageUrl:string="";
+  public imgData:any;
   constructor(private httpClient:HttpClient){  }
-
   SearchDataForImg(imgUrl:string){
     const thish = new HttpHeaders({'Ocp-Apim-Subscription-Key':'c4b9067fcdfd4f7db2193582b0744ba3'});
     this.httpClient.post(`https://westeurope.api.cognitive.microsoft.com/face/v1.0/detect?returnFaceAttributes=age,gender,headPose,smile,facialHair,glasses,emotion,hair,makeup,occlusion,accessories,blur,exposure,noise`,{
@@ -24,6 +24,10 @@ export class FaceDetectComponent implements OnInit {
           this.textData = data[0].faceId;
           this.found = true;
           console.log(data[0]);
+          this.webcamImage=null;
+          console.log(this.webcamImage);
+          this.imageUrl=imgUrl;
+          this.imgData=data[0];
         }
       }
     )
@@ -65,6 +69,7 @@ export class FaceDetectComponent implements OnInit {
           this.textData = data[0].faceId;
           this.found = true;
           console.log(data[0]);
+          this.imgData=data[0];
         }
       }
     )

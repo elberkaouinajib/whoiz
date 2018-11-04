@@ -1,11 +1,145 @@
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
 
-  <input type="text"  #imgUrl name="imgUrl"> <button (click)="SearchDataForImg(imgUrl.value)">Chercher</button><br/>
-  <webcam [height]="500" [width]="500" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam"
-  [videoOptions]="videoOptions"
-></webcam>     <br/>
-<button class="actionBtn" (click)="triggerSnapshot();">Take A Snapshot</button>
+<script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+<script src="../../assets/JS/semantic.min.js"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+<div  width="100%" height="100%"  class="ui form">
+    <div class="ui fluid action input"  width="100%" height=100%>
+      <input type="text" #imgUrl name="imgUrl" placeholder="Search...">
+      <div class="ui button" (click)="SearchDataForImg(imgUrl.value)" >Search</div>
+    </div><br/>
+    <div class="column" style="text-align:center">
+        <webcam  [trigger]="triggerObservable"  [width]="350" (imageCapture)="handleImage($event)" *ngIf="showWebcam"
+        [videoOptions]="videoOptions"
+      ></webcam>  
+   </div>
+   <div class="column" style="text-align:center">
+      <button class="ui primary button" (click)="triggerSnapshot();">Take A Snapshot</button>
+ </div>
+</div><br/>
 
-<div class="snapshot" *ngIf="webcamImage">
-  <h2>Nice one!</h2>
-  <img [src]="webcamImage.imageAsDataUrl"/>
-</div>
+<div class="ui grid" >
+    <div class="four wide column">
+        <div class="snapshot" *ngIf="webcamImage;else onlineImg" >
+            <img [src]="webcamImage.imageAsDataUrl" width="100%"/>
+          </div>
+          <ng-template #onlineImg class="snapshot" >
+              <img [src]="imageUrl" width="100%"/>
+          </ng-template>
+    </div>
+    <div class="nine wide column" *ngIf="imgData">
+        <div class="ui list">
+            <div class="item">
+                <i class="genderless icon"></i>
+                <div class="content">
+                  <div class="header">gender</div>
+                  <div class="description">{{imgData.faceAttributes.gender}}</div>
+                </div>
+              </div>
+            <div class="item">
+              <i class="calendar alternate outline icon"></i>
+              <div class="content">
+                <div class="header">Age</div>
+                <div class="description">{{imgData.faceAttributes.age}}</div>
+              </div>
+            </div>
+            <div class="item">
+                <i class="cloud icon"></i>
+                <div class="content">
+                  <div class="header">blur</div>
+                  <div class="list">
+                    <div class="item">
+                      <i class="icon"><i class="far fa-star"></i></i>
+                      <div class="content">
+                        <div class="header">blurLevel</div>
+                        <div class="description">{{imgData.faceAttributes.blur.blurLevel}}</div>
+                      </div>
+                    </div>
+                    <div class="item">
+                      <i class="percent icon"></i>
+                      <div class="content">
+                        <div class="header">value</div>
+                        <div class="description">{{imgData.faceAttributes.blur.value*100}}%</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                  <i class="icon"><i class="fas fa-grin-hearts"></i></i>
+                  <div class="content">
+                    <div class="header">emotion</div>
+                    <div class="list">
+                      <div class="item">
+                        <i class="icon"><i class="far fa-angry"></i></i>
+                        <div class="content">
+                          <div class="header">anger</div>
+                          <div class="description">{{imgData.faceAttributes.emotion.anger*100}}%</div>
+                        </div>
+                      </div>
+                      <div class="item">
+                        <i class="icon"><i class="far fa-meh-blank"></i></i>
+                        <div class="content">
+                          <div class="header">contempt</div>
+                          <div class="description">{{imgData.faceAttributes.emotion.contempt*100}}%</div>
+                        </div>
+                      </div>
+                      <div class="item">
+                          <i class="icon"><i class="far fa-smile-beam"></i></i>
+                          <div class="content">
+                            <div class="header">happiness</div>
+                            <div class="description">{{imgData.faceAttributes.emotion.happiness*100}}%</div>
+                          </div>
+                        </div>
+                        <div class="item">
+                            <i class="icon"><i class="far fa-sad-tear"></i></i>
+                            <div class="content">
+                              <div class="header">sadness</div>
+                              <div class="description">{{imgData.faceAttributes.emotion.sadness*100}}%</div>
+                            </div>
+                          </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="item">
+                    <i class="icon"><i class="far fa-grin-beam"></i></i>
+                    <div class="content">
+                      <div class="header">makeup</div>
+                      <div class="list">
+                        <div class="item">
+                            <i class="icon"><i class="fas fa-eye"></i></i>
+                          <div class="content">
+                            <div class="header">eyeMakeup</div>
+                            <div class="description">{{imgData.faceAttributes.makeup.eyeMakeup}}</div>
+                          </div>
+                        </div>
+                        <div class="item">
+                            <i class="icon"><i class="far fa-kiss"></i></i>
+                          <div class="content">
+                            <div class="header">lipMakeup</div>
+                            <div class="description">{{imgData.faceAttributes.makeup.lipMakeup}}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="item">
+                      <i class="icon"><i class="fas fa-glasses"></i></i>
+                      <div class="content">
+                        <div class="header">glasses</div>
+                        <div class="description">{{imgData.faceAttributes.glasses}}</div>
+                      </div>
+                    </div>
+                    <div class="item">
+                        <i class="smile outline icon"></i>
+                        <div class="content">
+                          <div class="header">smile</div>
+                          <div class="description">{{imgData.faceAttributes.smile*100}}%</div>
+                        </div>
+                      </div>
+          </div>
+    </div>
+  </div>
